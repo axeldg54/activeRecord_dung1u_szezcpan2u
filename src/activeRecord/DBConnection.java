@@ -5,32 +5,34 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.Properties;
 
-public abstract class DBConnection {
+public class DBConnection {
 
     private Properties connectionProps;
     private static Connection connect;
-    private String userName, password, serverName, portNumber, tableName, dbName, urlDB;
+    private String userName = "root";
+    private String password = "";
+    private String serverName = "localhost";
+    private String portNumber = "3306";
+    private String tableName = "personne";
+    private String dbName = "testpersonne";
 
-    public DBConnection(String userName, String password, String serverName, String portNumber, String tableName, String dbName) throws SQLException {
-        this.userName = userName;
-        this.password = password;
-        this.serverName = serverName;
-        this.portNumber = portNumber;
-        this.tableName = tableName;
-        this.dbName = dbName;
-
+    public DBConnection() throws SQLException {
         connectionProps = new Properties();
         connectionProps.put("user", userName);
         connectionProps.put("password", password);
-        urlDB = "jdbc:mysql://" + serverName + ":";
+        String urlDB = "jdbc:mysql://" + serverName + ":";
         urlDB += portNumber + "/" + dbName;
-        this.connect = DriverManager.getConnection(urlDB, connectionProps);
+        connect = DriverManager.getConnection(urlDB, connectionProps);
     }
 
-    public static synchronized Connection getConnection() {
+    public static synchronized Connection getConnection() throws SQLException {
         if (connect == null) new DBConnection();
+        return connect;
     }
 
-    public void setNomDB(String nomDB) {
+    public void setNomDB(String nomDB) throws SQLException {
+        this.dbName = nomDB;
+        connect = null;
+        connect = getConnection();
     }
 }
