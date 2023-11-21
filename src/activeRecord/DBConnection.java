@@ -31,8 +31,9 @@ public class DBConnection {
     }
 
     public void setNomDB(String nomDB) throws SQLException {
-        this.dbName = nomDB;
-        connect = null;
-        connect = getConnection();
+        if(nomDB != null && !nomDB.equals(dbName)) {
+            this.dbName = nomDB;
+            connect = null;
+        }
     }
 }
