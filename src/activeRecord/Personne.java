@@ -50,4 +50,16 @@ public class Personne {
         }
         return p;
     }
+
+    public static void createTable() throws SQLException {
+        Connection c = DBConnection.getConnection();
+        Statement statement = c.createStatement();
+        statement.executeQuery("create table Personne(`id` int(11) NOT NULL, `nom` varchar(40) NOT NULL, `prenom` varchar(40) NOT NULL) ENGINE=InnoDB DEFAULT CHARSET=latin1;");
+    }
+
+    public static void deleteTable() throws SQLException {
+        Connection c = DBConnection.getConnection();
+        Statement statement = c.createStatement();
+        statement.executeQuery("drop table Personne");
+    }
 }

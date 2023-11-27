@@ -35,4 +35,8 @@ public class DBConnection {
             connect = null;
         }
     }
+
+    public static String getDbName() {
+        return dbName;
+    }
 }
