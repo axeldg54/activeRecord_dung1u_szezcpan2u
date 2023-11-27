@@ -38,4 +38,16 @@ public class Personne {
         }
         return p;
     }
+
+    public static ArrayList<Personne> findByName(String nom) throws SQLException {
+        Connection c = DBConnection.getConnection();
+        PreparedStatement preparedStatement = c.prepareStatement("select * from Personne where nom = ?");
+        preparedStatement.setString(1,nom);
+        ResultSet resultSet = preparedStatement.executeQuery();
+        ArrayList<Personne> p = new ArrayList<Personne>();
+        while (resultSet.next()){
+            p.add(new Personne(resultSet.getInt(0),resultSet.getString(1), resultSet.getString(2)));
+        }
+        return p;
+    }
 }
