@@ -12,7 +12,10 @@ public class Personne {
     protected String nom;
     protected  String prenom;
 
-    public Personne(String p, String n){
+    public Personne(int i, String p, String n){
+        if (i  ){
+
+        }
         id = -1;
         nom = n;
         prenom = p;
@@ -24,8 +27,12 @@ public class Personne {
         Statement statement = c.createStatement();
         ResultSet resultSet = statement.executeQuery("select * from Personne");
         while (resultSet.next()){
-            p.add(new Personne(resultSet.getString(1), resultSet.getString(2)));
+            p.add(new Personne(resultSet.getInt(0),resultSet.getString(1), resultSet.getString(2)));
         }
         return p;
+    }
+
+    public static Personne findById(){
+        
     }
 }
