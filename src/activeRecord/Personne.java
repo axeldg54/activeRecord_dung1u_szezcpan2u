@@ -58,31 +58,38 @@ public class Personne {
     public static void createTable() throws SQLException {
         Connection c = DBConnection.getConnection();
         Statement statement = c.createStatement();
-        statement.executeQuery("create table Personne(`id` int(11) NOT NULL, `nom` varchar(40) NOT NULL, `prenom` varchar(40) NOT NULL) ENGINE=InnoDB DEFAULT CHARSET=latin1;");
+        statement.executeUpdate("create table IF NOT EXISTS Personne(`id` int(11) NOT NULL, `nom` varchar(40) NOT NULL, `prenom` varchar(40) NOT NULL) ENGINE=InnoDB DEFAULT CHARSET=latin1;");
     }
 
     public static void deleteTable() throws SQLException {
         Connection c = DBConnection.getConnection();
         Statement statement = c.createStatement();
-        statement.executeQuery("drop table Personne");
+        statement.executeUpdate("drop table Personne");
     }
 
     public void saveNew() throws SQLException {
         Connection c = DBConnection.getConnection();
-        Statement statement = c.createStatement();
-        statement.executeQuery("insert into Personne values (nom, prenom)");
+        String query = "insert into Personne (nom, prenom) values (?, ?)";
+        PreparedStatement preparedStatement = c.prepareStatement(query);
+        preparedStatement.setString(1, nom);
+        preparedStatement.setString(2, prenom);
     }
+
 
     public void update() throws SQLException {
         Connection c = DBConnection.getConnection();
-        Statement statement = c.createStatement();
-        statement.executeUpdate("update Personne set nom = nom and prenom = prenom where id = id");
+        String query = "update Personne set nom = ? and prenom = ? where id = ?";
+        PreparedStatement preparedStatement = c.prepareStatement(query);
+        preparedStatement.setString(1, nom);
+        preparedStatement.setString(2, prenom);
+        preparedStatement.setInt(3, id);
     }
 
     public void delete() throws SQLException {
         Connection c = DBConnection.getConnection();
-        Statement statement = c.createStatement();
-        statement.executeQuery("delete from Personne where id = id");
+        String query = "delete from Personne where id = ?";
+        PreparedStatement preparedStatement = c.prepareStatement(query);
+        preparedStatement.setInt(1, id);
         this.id = -1;
     }
 
