@@ -1,9 +1,6 @@
 package activeRecord;
 
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.ArrayList;
 
 public class Personne {
@@ -12,11 +9,9 @@ public class Personne {
     protected String nom;
     protected  String prenom;
 
-    public Personne(int i, String p, String n){
-        if (i  ){
-
-        }
-        id = -1;
+    public Personne(int i, String p, String n) throws SQLException {
+        if (i > 0) id = i;
+        else id = -1;
         nom = n;
         prenom = p;
     }
@@ -32,7 +27,15 @@ public class Personne {
         return p;
     }
 
-    public static Personne findById(){
-        
+    public static Personne findById(int id) throws SQLException {
+        Connection c = DBConnection.getConnection();
+        PreparedStatement preparedStatement = c.prepareStatement("select * from Personne where id = ?");
+        preparedStatement.setInt(1,id);
+        ResultSet resultSet = preparedStatement.executeQuery();
+        Personne p = null;
+        while (resultSet.next()){
+            p = new Personne(resultSet.getInt(0),resultSet.getString(1), resultSet.getString(2));
+        }
+        return p;
     }
 }
