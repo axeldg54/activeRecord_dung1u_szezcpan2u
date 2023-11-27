@@ -21,8 +21,8 @@ public class Personne {
         Statement statement = c.createStatement();
         ResultSet resultSet = statement.executeQuery("select * from Personne");
         while (resultSet.next()) {
-            Personne p = new Personne(resultSet.getString(1), resultSet.getString(2));
-            p.id = resultSet.getInt(0);
+            Personne p = new Personne(resultSet.getString(2), resultSet.getString(3));
+            p.id = resultSet.getInt(1);
             pers.add(p);
         }
         return pers;
