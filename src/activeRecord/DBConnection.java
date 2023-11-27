@@ -13,8 +13,7 @@ public class DBConnection {
     private String password = "";
     private String serverName = "localhost";
     private String portNumber = "3306";
-    private String tableName = "personne";
-    private String dbName = "testpersonne";
+    private static String dbName = "testpersonne";
 
     public DBConnection() throws SQLException {
         connectionProps = new Properties();
@@ -30,9 +29,9 @@ public class DBConnection {
         return connect;
     }
 
-    public void setNomDB(String nomDB) throws SQLException {
-        if(nomDB != null && !nomDB.equals(dbName)) {
-            this.dbName = nomDB;
+    public static void setNomDB(String nomDB) {
+        if(nomDB != null && !dbName.equals(nomDB)) {
+            dbName = nomDB;
             connect = null;
         }
     }
