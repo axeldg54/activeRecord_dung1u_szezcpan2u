@@ -64,7 +64,7 @@ public class Personne {
     public static void deleteTable() throws SQLException {
         Connection c = DBConnection.getConnection();
         Statement statement = c.createStatement();
-        statement.executeUpdate("drop table Personne");
+        statement.executeUpdate("drop table personne");
     }
 
     public void saveNew() throws SQLException {
