@@ -142,7 +142,6 @@ public class PersonneTest {
 		Personne p = Personne.findById(2);
 		p.delete();
 		Personne p2 = Personne.findById(2);
-
 		assertEquals( -1, p.getId(),"id devrait etre revenue a -1");
 		assertEquals( null, p2,"le supprime n'existe plus");
 	}
