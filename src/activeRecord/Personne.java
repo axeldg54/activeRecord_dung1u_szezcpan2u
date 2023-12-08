@@ -127,4 +127,9 @@ public class Personne {
         this.nom = nom;
         update();
     }
+
+    public void setPrenom(String p) throws SQLException {
+        this.prenom = p;
+        update();
+    }
 }
